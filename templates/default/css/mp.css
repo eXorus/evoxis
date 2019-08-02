@@ -1,0 +1,80 @@
+/*
+* VOIR UN MP
+*/
+
+#blockMP{
+	width: 100%;
+}
+
+#blockHeaderMP{
+	background-color: transparent;
+}
+
+#blockHeaderMP ul{
+}
+
+#blockHeaderMP ul li{
+}
+
+#blockHeaderMP ul li strong{
+	color: #940000;
+}
+
+
+#blockBodyMP{
+	padding: 1em;
+	margin-left: 30px;
+	margin-right: 30px;
+	text-align: justify;
+}
+
+#blockBodyBug{
+	padding: 1em;
+	margin-left: 30px;
+	margin-right: 30px;
+	text-align: justify;
+}
+
+div.blockCommentaireHeaderBug{
+	background:			url('../ico/ico_messages.png') top left no-repeat;
+	border-bottom: 				1px solid #b0a17f;
+	padding: 0.3em;
+	padding-left: 30px;
+	height: 25px;
+	font-weight: bold;
+	color:	#840000;
+	margin-left:			1em;
+	margin-right:			1em;
+
+}
+
+div.blockCommentaireBodyBug{
+ padding: 0.5em;
+	border-left: 				3px double #b0a17f;
+	border-top:				none;
+ 	margin-bottom: 20px;
+ 	margin-left:			1em;
+	margin-right:			1em;
+	background:		url('../main_pic/bg_light.png');
+}
+
+div.blockCommentaireHeader{
+	background:			url('../ico/ico_messages.png') top left no-repeat;
+	border-bottom: 				1px solid #b0a17f;
+	padding: 0.3em;
+	padding-left: 30px;
+	height: 25px;
+	font-weight: bold;
+	color:	#840000;
+	margin-left:			1em;
+	margin-right:			1em;
+}
+
+div.blockCommentaireBody{
+	padding: 0.5em;
+ 	margin-bottom: 20px;
+	margin-left:			1em;
+	margin-right:			1em;
+	border-left: 				3px solid #b0a17f;
+	background:		url('../main_pic/bg_light.png');
+}

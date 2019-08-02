@@ -1,0 +1,121 @@
+<?php
+defined( '_VALID_INDEX' ) or die( 'Restricted access' );
+
+// Define _VALID_CORE_FORUM_TOPIC
+define( '_VALID_CORE_FORUM_TOPIC', 1 );
+	
+$select = intval($_GET['select']);
+$start = intval($_GET['start']);
+$goto = intval($_GET['goto']);
+
+
+if(empty($start) && !empty($goto)){
+	//Je connais pas la page mais j'ai l'id du post
+	$result = $db->Send_Query("SELECT COUNT(*) FROM exo_forum_posts WHERE pid <= '$goto' AND tid='$select'");
+	$go = $db->get_row($result);
+	$num_before = $go[0];
+	$page = ceil($num_before/$Nmax);
+	$start = (($page-1)*$Nmax);	
+}
+
+
+$rq = $db->Send_Query("
+	SELECT 
+		fp.pid,
+		fp.body,
+		up.pseudo as p_name,
+		up.uid as p_uid,
+		up.wow_id as p_wow_id,
+		up.sexe,
+		ep.id as avatarID,
+		ep.image_extension as avatarExtID,
+		up.signature as p_signature,
+		fp.post_time,
+		fp.post_last_edit_time,
+		ue.pseudo as e_name,
+		ue.uid as e_uid,
+		i.total as itotal,
+		ft.subject as topic_subject,
+		fb.board_name as board_name,
+		fb.bid as board_id,
+		ft.nb_replies as nb_posts,
+		ft.last_post_id,
+		ft.first_post_id,
+		ft.tid,
+		ft.locked,
+		fc.cat_name,
+		fc.catid,
+		g.gid,
+		CAST(GROUP_CONCAT(DISTINCT CONCAT_WS('|', ts.tag, ta.title) SEPARATOR ';') AS CHAR) AS listeTags
+		
+	FROM exo_forum_posts fp
+	LEFT JOIN exo_users up ON up.uid = fp.author
+	LEFT JOIN exo_users ue ON ue.uid = fp.post_last_edit_uid
+	LEFT JOIN exo_indices i ON i.uid = fp.author
+	LEFT JOIN exo_forum_topics ft ON ft.tid = fp.tid
+	LEFT JOIN exo_forum_boards fb ON fb.bid = ft.bid
+	LEFT JOIN exo_forum_categories fc ON fc.catid = fb.catid
+	LEFT JOIN exo_pictures ep ON (ep.uid = fp.author AND ep.type=1 AND ep.selected=1)
+	LEFT JOIN exo_groups_users gu ON gu.uid=fp.author
+	LEFT JOIN exo_groups g ON g.gid=gu.gid
+	LEFT JOIN exo_forum_tag_assoc ts ON ts.topic = ft.tid
+	LEFT JOIN exo_forum_tags ta ON ta.tag_id = ts.tag
+	WHERE fp.tid = '$select' AND fb.access_lvl<=".$secureObject->getAccessLevel()."
+	GROUP BY ft.tid, fp.pid HAVING MAX(g.access_Level)
+	ORDER BY fp.post_time
+	LIMIT $start,$Nmax");
+$posts = $db->loadObjectList($rq);
+
+
+	
+//Update le nb de vue
+$query = "UPDATE exo_forum_topics SET nb_views=nb_views+1 WHERE tid = '$select'";
+$result = $db->Send_Query($query);
+
+//Nb_replies +1 le post du topic
+$Ntotal = $posts[0]->nb_posts+1;
+
+
+
+if(!empty($_SESSION['uid'])){
+	//Topic déjà consulté ?
+	$nbr_vu = $db->get_result($db->Send_Query('
+		SELECT uid 
+		FROM exo_lu_forum
+		WHERE tid = '.$select.' AND uid = '.$_SESSION['uid'].''), 0);
+		
+	$last_pid = $posts[0]->last_post_id;
+
+		
+	if ($nbr_vu == 0) //Si c'est la première fois on insère une ligne entière
+	{
+		
+	    $db->Send_Query('
+			INSERT INTO exo_lu_forum (uid, tid, last_pid)
+	        VALUES ('.$_SESSION['uid'].', '.$select.','.$last_pid.')');
+	}
+	else //Sinon on met simplement à jour
+	{
+	    $db->Send_Query('UPDATE exo_lu_forum SET last_pid =
+	        '.$last_pid.' WHERE tid = '.$select.'
+	        AND uid = '.$_SESSION['uid'].'');
+			
+	}
+}
+
+/*
+* MANAGE TITLE CATEGORIE
+*/
+$titleCat = 'forum';
+ 
+/*
+* MANAGE PATHWAY
+*/
+$pathway = array(
+'Forum' => 'index.php?comp=forum_index',
+$posts[0]->cat_name => 'index.php?comp=forum_index#cat'.intval($posts[0]->catid),
+$posts[0]->board_name => 'index.php?comp=forum_board&amp;select='.intval($posts[0]->board_id).'&amp;start=0',
+$posts[0]->topic_subject => 'index.php?comp=forum_topic&amp;select='.intval($posts[0]->ft.tid).'&amp;start=0',
+'Lecture du sujet' => ''
+);  
+?>

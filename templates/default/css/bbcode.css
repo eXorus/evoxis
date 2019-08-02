@@ -1,0 +1,81 @@
+#bbcode_bold, #bbcode_italic, #bbcode_underline, 
+#bbcode_strike, #bbcode_hrp, #bbcode_quote, #bbcode_left, 
+#bbcode_center, #bbcode_right, #bbcode_url, #bbcode_img, #bbcode_youtube{
+ width: 20px;
+ height: 20px;
+}
+
+#bbcode_bold{
+ background: url(../ico/bbcode_bold.png) center right no-repeat;
+}
+#bbcode_italic{
+ background: url(../ico/bbcode_italic.png) center right no-repeat;
+}
+#bbcode_underline{
+ background: url(../ico/bbcode_underline.png) center right no-repeat;
+}
+#bbcode_strike{
+ background: url(../ico/bbcode_strike.png) center right no-repeat;
+}
+#bbcode_hrp{
+ background: url(../ico/bbcode_hrp.png) center right no-repeat;
+}
+#bbcode_quote{
+ background: url(../ico/bbcode_quote.png) center right no-repeat;
+}
+#bbcode_left{
+ background: url(../ico/bbcode_left.png) center right no-repeat;
+}
+#bbcode_center{
+ background: url(../ico/bbcode_center.png) center right no-repeat;
+}
+#bbcode_right{
+ background: url(../ico/bbcode_right.png) center right no-repeat;
+}
+#bbcode_url{
+ background: url(../ico/bbcode_url.png) center right no-repeat;
+}
+#bbcode_img{
+ background: url(../ico/bbcode_img.png) center right no-repeat;
+}
+#bbcode_youtube{
+ background: url(../ico/bbcode_youtube.png) center right no-repeat;
+}
+
+div.hrp{
+ padding: 5px;
+ margin-top:	1em;
+ color: #e1cfa1;
+ border-left: 0px solid black;
+}
+
+div.hrp:hover{
+ padding: 5px;
+ margin-top:	1em;
+ color: black;
+ border-left: 0px solid black;
+}
+
+div.quote{
+ margin: 5px;
+ padding: 3px;
+	background-image:		url('../main_pic/bg_news.png');
+ border: 1px dotted #b0a17f;
+}
+
+
+table.hrp {
+	text-align:				justify;
+	padding:				3px;
+}
+
+table.hrp td.hrp {
+	border-bottom:			1px solid #555;
+}
+
+
+div.quote {
+	border: 				1px solid #b0a17f;
+	background-image:		url('../main_pic/bg_news.png');
+	margin: 5px;
+}

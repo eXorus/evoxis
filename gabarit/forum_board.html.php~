@@ -1,0 +1,131 @@
+<?php
+defined( '_VALID_CORE_FORUM_BOARD' ) or die( 'Restricted access' );
+require_once('./templates/'.$link_style.'top.php');
+
+
+$start = intval($_GET['start']);
+
+
+/****
+*NAVIGATION
+*/
+$navigation_content = '<div class="navigation"><strong>› Navigation :</strong>';	
+$navigation_content .= '<a href="index.php?comp=forum_index">[ Index ]</a>';		
+if($secureObject->verifyAuthorization('FO_FORUM_TOPIC_ADD')==TRUE)
+	$navigation_content .= ' • <a class="left" href="index.php?comp=forum_post&amp;bid='.$select.'">[ Nouveau Sujet ]</a>&nbsp;';
+$navigation_content .= '</div>';
+
+
+echo $navigation_content;
+
+/****
+*TAGS
+*/
+echo '<div id="onglets"><center><table class="onglets"><tr><td class="onglet_left"></td><td class="onglet_center"><div class="pagination"><strong>Tags : </strong>';
+foreach($tags as $tag){
+	if(in_array($tag->tag_id, $_SESSION['ForumFilterArray'])){
+		echo '[<a href="./index.php?comp=forum_board&amp;select='.$select.'&amp;filter='.$tag->tag_id.'&amp;filteraction=remove" title="'.$tag->description.'"><strong>'.str_replace(' ', '&nbsp;',htmlspecialchars($tag->title)).'</strong></a>] ';
+	}
+	else{
+		echo '[<a href="./index.php?comp=forum_board&amp;select='.$select.'&amp;filter='.$tag->tag_id.'&amp;filteraction=add" title="'.$tag->description.'">'.str_replace(' ', '&nbsp;',htmlspecialchars($tag->title)).'</a>] ';
+	}
+	
+}
+echo '</div></td><td class="onglet_right"></td></tr></table></center></div>';
+
+/*
+echo '<div class="topic_top_std"></div>
+<div class="topic_middle_std">
+<div id="titre_topic">'.stripslashes(htmlspecialchars($topics[0]->board_name)).'</div></div><div class="topic_bottom_std"></div>
+';
+*/
+
+displayPaginationBar($Ntotal, ($start/$Nmax)+1, "./index.php?comp=forum_board&amp;select=".$select."&amp;start=", 30);
+
+if(!empty($topics)){
+
+	?>
+	<div class="blocktable">
+		
+		<div class="box">
+			<div class="inbox">
+				<table class="fofotable">
+				<thead>
+					<tr>
+						<th class="ft2" scope="col"><?php echo stripslashes(htmlspecialchars($topics[0]->board_name)) ?></th>
+						<th class="ft3" scope="col">Réponses</th>
+						<th class="ft3" scope="col">Vues</th>
+						<th class="ft4" scope="col">Dernier message</th>
+					</tr>
+				</thead>
+				<tbody>
+	<?php
+	foreach($topics as $topic){
+	
+		//Icone lu ou non lu?
+		if($topic->m_last_read<$topic->m_pid || empty($topic->m_last_read)){
+			//message non lu
+			$ico_l = '<div class="topic_message_nonlu">&nbsp;</div>';
+			//$arrow = '<a href="index.php?comp=forum_topic&amp;select='.$topic->tid.'&amp;goto='.$topic->m_last_read.'#pid'.$topic->m_last_read.'"><img src="./templates/'.$link_style.'/ico/arrow.png" align="top"></a>';
+		}
+		else{
+			//tout lu
+			$ico_l = '<div class="topic_message_lu">&nbsp;</div>';
+			$arrow = '';
+		}
+		
+		//Build Subject
+		$subject_build = stripslashes(htmlspecialchars($topic->subject));
+		
+		//Tags
+		if($topic->listeTags!=';'){
+			$tagTopic = 'Tags : ';
+			$listags = explode(';', $topic->listeTags);
+			foreach($listags as $onetag){
+				$datatag = explode('|', $onetag);
+				$tagTopic .= '[<a href="index.php?comp=forum_board&amp;select='.$select.'&amp;start=0&filter='.$datatag[0].'">'.htmlspecialchars($datatag[1]).'</a>] ';
+			}
+		}
+		else{
+			$tagTopic = '';
+		}
+		
+	
+		if($topic->announce=='1'){
+			echo '<tr class="tr_announce">
+			<td class="ft2">'.$ico_l.'<img src="./templates/'.$link_style.'/ico/starfull.png" alt="Annonce"/>&nbsp;<a class="topic_announce" href="index.php?comp=forum_topic&amp;select='.$topic->tid.'&amp;start=0">'.$subject_build.'</a>
+			'.$arrow.'<br />par <a class="par" href="./index.php?comp=profil&amp;select='.$topic->s_uid.'">'.stripslashes(htmlspecialchars($topic->s_name)).'</a> 
+			le '.format_time($topic->s_time).'<br />
+			'.$tagTopic.'</td>';
+		}
+		else{
+			echo '<tr class="tr">
+			<td class="ft2">'.$ico_l.'<a class="topic" href="index.php?comp=forum_topic&amp;select='.$topic->tid.'&amp;start=0">'.$subject_build.'</a>
+			'.$arrow.'<br />par <a class="par" href="./index.php?comp=profil&amp;select='.$topic->s_uid.'">'.stripslashes(htmlspecialchars($topic->s_name)).'</a> 
+			le '.format_time($topic->s_time).'<br />
+			'.$tagTopic.'</td>';
+		}
+		echo '<td class="ft3"><center>'.$topic->nb_replies.'</center></td>';
+		echo '<td class="ft3"><center>'.$topic->nb_views.'</center></td>';		
+		if(!empty($topic->m_time)){
+			echo '<td class="ft4"><center>'.format_time($topic->m_time).'<br /><a href="./index.php?comp=profil&amp;select='.$topic->m_uid.'">'.stripslashes(htmlspecialchars($topic->m_name)).'</a>&nbsp;<a href="index.php?comp=forum_topic&amp;select='.$topic->tid.'&amp;goto='.$topic->m_last_read.'#pid'.$topic->m_last_read.'"><img src="./templates/'.$link_style.'/ico/last.png" alt="Aller au dernier message" title="Aller au dernier message" onmouseover="Tip(\'Aller au dernier message\')" onmouseout="UnTip()"/></a></center></td>';
+		}
+		else{
+			echo '<td class="ft4">Aucun message</td>';
+		}
+		echo '</tr>';
+		
+	}
+	echo '</tbody></table></div></div></div>';
+}else{
+	echo '<br />Aucun sujet à afficher<br />';
+}
+
+displayPaginationBar($Ntotal, ($start/$Nmax)+1, "./index.php?comp=forum_board&amp;select=".$select."&amp;start=", 30);
+
+
+echo $navigation_content;
+
+require_once('./templates/'.$link_style.'bottom.php');
+
+?>

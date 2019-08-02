@@ -1,0 +1,326 @@
+<?php
+defined( '_VALID_INDEX' ) or die( 'Restricted access' );
+
+// Define _VALID_CORE_FORUM_POST
+define( '_VALID_CORE_FORUM_POST', 1 );
+
+/*********************
+* Traitement du Formulaire
+*********************/
+if(!empty($_GET['task']) && $_GET['task']=="process" && $_POST["previsualiser"]!="Prévisualiser"){
+
+	if(!empty($_POST['pid']) && !empty($_POST['tid']) && !empty($_POST['subject']) && !empty($_POST['message'])){
+		//EDITION TOPIC
+		
+		$subject = mysql_real_escape_string($_POST['subject']);
+		$message = mysql_real_escape_string($_POST['message']);
+		$tag = intval($_POST['tag']);
+		$pid = intval($_POST['pid']);
+		$tid = intval($_POST['tid']);
+		
+		if(!empty($_POST['announce']) && $_POST['announce']=='on'){$announce = 1;}
+		else{$announce = 0;}
+		
+		$time = time();
+		
+		//Update POST
+		$query = "	UPDATE exo_forum_posts 
+					SET 	body='$message', 
+							post_last_edit_time='$time', 
+							post_last_edit_uid='".$_SESSION['uid']."' 
+					WHERE pid = '$pid'";
+		$result = $db->Send_Query($query);
+		
+		//Update TOPIC
+		$query = "	UPDATE exo_forum_topics 
+					SET 	subject='$subject', 
+							announce='$announce',
+							link_tag='$tag'
+					WHERE tid = '$tid'";
+		$result = $db->Send_Query($query);		
+		
+		$msg = message::getInstance('SUCCESS','Edition du sujet réussie', 'index.php?comp=forum_topic&amp;select='.$tid.'&amp;start=0');
+		
+	}	
+	else if(!empty($_POST['pid']) && !empty($_POST['message'])){
+		//EDITION REPONSE
+		
+		$message = mysql_real_escape_string($_POST['message']);
+		$pid = intval($_POST['pid']);
+		
+		$time = time();
+		
+		//Update POST
+		$query = "	UPDATE exo_forum_posts 
+					SET 	body='$message', 
+							post_last_edit_time='$time', 
+							post_last_edit_uid='".$_SESSION['uid']."' 
+					WHERE pid = '$pid'";
+		$result = $db->Send_Query($query);	
+
+		//Recherche le tid de ce message
+		$query = "SELECT tid FROM exo_forum_posts WHERE pid = '$pid'";
+		$result = $db->Send_Query($query);
+		$array = $db->get_array($result);
+		$tid = $array['tid'];		
+		
+		$msg = message::getInstance('SUCCESS','Edition de la réponse réussie', 'index.php?comp=forum_topic&amp;select='.$tid.'&amp;goto='.$pid.'#pid'.$pid);
+		
+	}	
+	else if(!empty($_POST['tid']) && !empty($_POST['message'])){
+		//NOUVELLE REPONSE
+		
+		$message = mysql_real_escape_string($_POST['message']);
+		$tid = intval($_POST['tid']);
+		
+		$time = time();
+		
+		//Requete POST
+		$query = "INSERT INTO 
+			exo_forum_posts (pid, tid, body, author, post_time, post_last_edit_time, post_last_edit_uid) 
+			VALUES(NULL,'$tid','$message','".intval($_SESSION['uid'])."','$time', 0, 0)";
+		$result = $db->Send_Query($query);
+		$pid = $db->last_insert_id();
+		
+		//Mise à jour de TOPIC
+		$query = "UPDATE exo_forum_topics SET nb_replies=nb_replies+1, last_post_id='$pid' WHERE tid = '$tid'";
+		$result = $db->Send_Query($query);	
+		
+		//Recherche le bid de ce message
+		$query = "SELECT bid FROM exo_forum_topics WHERE tid = '$tid'";
+		$result = $db->Send_Query($query);
+		$array = $db->get_array($result);
+		$bid = $array['bid'];
+		
+		//Mise à jour de BOARD
+		$query = "UPDATE exo_forum_boards SET nb_posts=nb_posts+1, last_post_id='$pid' WHERE bid = '$bid'";
+		$result = $db->Send_Query($query);
+		
+		//Mise à jour de lu
+		$db->Send_Query("UPDATE exo_lu_forum SET last_pid ='$pid' WHERE tid = '$tid' AND uid = ".intval($_SESSION['uid']));
+		
+		//Indices
+		update_ivo('nb_post');	
+		
+		$msg = message::getInstance('SUCCESS','Reponse ajoutée', 'index.php?comp=forum_topic&amp;select='.$tid.'&amp;goto='.$pid.'#pid'.$pid);
+		
+		
+	}
+	else if (!empty($_POST['bid']) && !empty($_POST['subject']) && !empty($_POST['message'])){
+		//NOUVEAU TOPIC
+		
+		$subject = mysql_real_escape_string($_POST['subject']);
+		$message = mysql_real_escape_string($_POST['message']);
+		$tag = intval($_POST['tag']);
+		$bid = intval($_POST['bid']);
+		
+		if(!empty($_POST['announce']) && $_POST['announce']=='on'){$announce = 1;}
+		else{$announce = 0;}
+				
+		$time = time();
+		
+		//Requete TOPIC
+		$query = "INSERT INTO 
+			exo_forum_topics(tid, bid, announce, subject, nb_replies, nb_views, first_post_id, last_post_id, link_tag) 
+			VALUES(NULL,'$bid','$announce','$subject', 0, 0, 0, 0, '$tag')";
+		$result = $db->Send_Query($query);
+		$tid = $db->last_insert_id();
+		
+		//Requete POST
+		$query = "INSERT INTO 
+			exo_forum_posts (pid, tid, body, author, post_time, post_last_edit_time, post_last_edit_uid) 
+			VALUES(NULL,'$tid','$message','".intval($_SESSION['uid'])."','$time', 0, 0)";
+		$result = $db->Send_Query($query);
+		$pid = $db->last_insert_id();
+		
+		//Mise à jour de TOPIC
+		$query = "UPDATE exo_forum_topics SET first_post_id='$pid', last_post_id='$pid' WHERE tid = '$tid'";
+		$result = $db->Send_Query($query);	
+		
+		//Mise à jour de BOARD
+		$query = "UPDATE exo_forum_boards SET nb_topics=nb_topics+1, last_post_id='$pid' WHERE bid = '$bid'";
+		$result = $db->Send_Query($query);
+		
+		//Mise à jour de lu
+		$db->Send_Query("INSERT INTO exo_lu_forum (uid, tid, last_pid) VALUES ('".$_SESSION['uid']."', '$tid','$pid')");
+		
+		//Indices
+		update_ivo('nb_topic');
+		
+		$msg = message::getInstance('SUCCESS','Sujet ajouté', 'index.php?comp=forum_topic&amp;select='.$tid.'&amp;start=0');
+		
+		
+	}
+	
+}
+/*********************
+* Affichage du formulaire pour l'édition
+*********************/
+else if(!empty($_GET['pid']) && !empty($_GET['tid'])){
+	//EDITION TOPIC
+
+	$pid = intval($_GET['pid']);
+	$tid = intval($_GET['tid']);
+
+	$rq = $db->Send_Query("
+			SELECT fp.body, ft.subject, ft.announce, ft.link_tag
+			FROM exo_forum_posts fp, exo_forum_topics ft
+			WHERE fp.tid =  ft.tid
+			AND fp.pid='$pid'
+			AND ft.tid='$tid'");
+			
+	$result = $db->get_array($rq);
+
+	$form_body = stripslashes(htmlspecialchars($result['body']));
+	$form_subject = stripslashes(htmlspecialchars($result['subject']));
+	$form_tag = $result['link_tag'];
+	if($result['annouce']==1) $form_announce = 'checked="checked"';
+	else $form_announce = '';
+	
+	//Recherche le bid de ce message
+		$query = "SELECT bid FROM exo_forum_topics WHERE tid = '$tid'";
+		$result = $db->Send_Query($query);
+		$array = $db->get_array($result);
+		$bid = $array['bid'];
+	$rq = $db->Send_Query("SELECT tag_id, title, description FROM exo_forum_tags WHERE link_bid='$bid' ORDER BY title");
+	$tags = $db->loadObjectList($rq);
+}
+else if(!empty($_GET['pid'])){
+	//EDITION POST
+
+	$pid = intval($_GET['pid']);
+
+	$rq = $db->Send_Query("
+			SELECT body
+			FROM exo_forum_posts 
+			WHERE pid='$pid'");
+			
+	$result = $db->get_array($rq);
+
+	$form_body = stripslashes(htmlspecialchars($result['body']));
+}
+else if(!empty($_GET['bid'])){
+	//New: topic
+	$select_bid = intval($_GET['bid']);
+	$rq = $db->Send_Query("SELECT tag_id, title, description FROM exo_forum_tags WHERE link_bid='$select_bid' ORDER BY title");
+	$tags = $db->loadObjectList($rq);
+	
+}
+
+//Prévisualisation
+if ( (isset($_POST["previsualiser"])) && ($_POST["previsualiser"]=="Prévisualiser") ) {
+	$form_body = $_POST['message'];
+	$_GET['bid'] = intval($_POST['bid']);
+		$rq = $db->Send_Query("SELECT tag_id, title, description FROM exo_forum_tags WHERE link_bid='$bid' ORDER BY title");
+	$tags = $db->loadObjectList($rq);
+	
+}
+
+//Derniers messages: Si on post et si on edit un post.
+if ((!empty($_GET['pid']) && empty($_GET['tid'])) || (!empty($_GET['tid']) && empty($_GET['pid']))){
+
+	if(!empty($_GET['tid'])){
+		$select = intval($_GET['tid']);
+	}
+	else{
+		$select_pid = intval($_GET['pid']);
+		
+		$rq = $db->Send_Query("
+			SELECT tid
+			FROM exo_forum_posts 
+			WHERE pid='$select_pid'");
+			
+		$result = $db->get_array($rq);
+		
+		$select = $result['tid'];
+	}
+
+	$rq = $db->Send_Query("
+	SELECT 
+		fp.pid,
+		fp.body,
+		up.pseudo as p_name,
+		up.uid as p_uid,
+		up.wow_id as p_wow_id,
+		ep.id as avatarID,
+		ep.image_extension as avatarExtID,
+		up.signature as p_signature,
+		fp.post_time,
+		fp.post_last_edit_time,
+		ue.pseudo as e_name,
+		ue.uid as e_uid,
+		i.total as itotal,
+		ft.subject as topic_subject,
+		fb.board_name as board_name,
+		fb.bid as board_id,
+		ft.nb_replies as nb_posts,
+		ft.last_post_id,
+		ft.first_post_id,
+		ft.tid,
+		ft.subject as topic_subject,
+		fc.cat_name,
+		fc.catid
+		
+	FROM exo_forum_posts fp
+	LEFT JOIN exo_users up ON up.uid = fp.author
+	LEFT JOIN exo_users ue ON ue.uid = fp.post_last_edit_uid
+	LEFT JOIN exo_indices i ON i.uid = fp.author
+	LEFT JOIN exo_forum_topics ft ON ft.tid = fp.tid
+	LEFT JOIN exo_forum_boards fb ON fb.bid = ft.bid
+	LEFT JOIN exo_forum_categories fc ON fc.catid = fb.catid
+	LEFT JOIN exo_pictures ep ON (ep.uid = fp.author AND ep.type=1 AND ep.selected=1)
+	WHERE fp.tid = '$select'
+	ORDER BY fp.post_time DESC
+	LIMIT 30");
+
+	$last_msgs = $db->loadObjectList($rq);
+	
+	$cat_name = $last_msgs[0]->cat_name;
+	$catid = $last_msgs[0]->catid;	
+	$board_name = $last_msgs[0]->board_name;
+	$bid = $last_msgs[0]->board_id;
+}
+else{
+	
+	$rq = $db->Send_Query("
+				SELECT fb.board_name, fb.bid, fc.cat_name, fc.catid
+				FROM exo_forum_boards fb
+				LEFT JOIN exo_forum_categories fc ON fc.catid = fb.catid
+				WHERE fb.bid = '".intval($_GET['bid'])."'");
+	$temp = $db->get_array($rq);
+	
+	$cat_name = $temp['cat_name'];
+	$catid = $temp['catid'];
+	$board_name = $temp['board_name'];
+	$bid = $temp['bid'];
+}
+
+
+/*
+* MANAGE TITLE CATEGORIE
+*/
+$titleCat = 'forum';
+
+
+ 
+/*
+* MANAGE PATHWAY
+*/
+if(empty($last_msgs[0]->topic_subject)){
+	$pathway = array(
+	'Forum' => 'index.php?comp=forum_index',
+	$cat_name => 'index.php?comp=forum_index#cat'.intval($catid),
+	$board_name => 'index.php?comp=forum_board&amp;select='.intval($bid).'&amp;start=0',
+	'Création d\'un nouveau sujet' => ''
+	); 
+}
+else{
+	$pathway = array(
+	'Forum' => 'index.php?comp=forum_index',
+	$cat_name => 'index.php?comp=forum_index#cat'.intval($catid),
+	$board_name => 'index.php?comp=forum_board&amp;select='.intval($bid).'&amp;start=0',
+	$last_msgs[0]->topic_subject => 'index.php?comp=forum_topic&amp;select='.intval($last_msgs[0]->tid).'&amp;start=0',
+	'Ajout d\'une réponse au sujet' => ''
+	); 
+}
+?>

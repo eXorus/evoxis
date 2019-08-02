@@ -1,0 +1,96 @@
+AuthUserFile /home/devevoxis/public_html/.htpasswd
+AuthName "Sur invitation uniquement ;)"
+AuthType Basic
+Require valid-user
+
+order deny,allow
+deny from all
+allow from 88.171.127.55
+allow from 88.188.172.31
+allow from 87.65.120.205
+allow from 92.133.118.50
+allow from 87.231.61.205
+allow from 81.50.147.213
+allow from 84.102.77.40
+allow from 86.209.193.129
+allow from 87.65.112.74
+allow from 86.67.26.118
+allow from 77.200.145.100
+allow from 90.59.162.4 
+allow from 86.199.150.252
+allow from 90.15.52.79
+allow from 83.197.30.107
+allow from 81.80.133.242
+allow from 81.242.42.15
+allow from 90.4.6.166
+allow from 87.64.131.46
+allow from 194.146.51.249 
+allow from 86.71.110.166
+allow from 81.243.90.220
+allow from 91.182.56.85
+allow from 90.9.253.144
+allow from 91.182.56.85
+allow from 91.177.63.22
+allow from 91.177.53.131
+allow from 81.243.83.85
+
+#Auditeur Arthan
+#allow from 88.138.60.9
+#allow from 93.23.55.124
+
+#BetaTesteur Cortez
+#allow from 93.16.19.53
+#allow from 93.16.19.113
+#allow from 93.16.165.196
+#allow from 93.16.165.236
+#allow from 93.16.165.242
+#allow from 93.16.165.68
+#allow from 93.16.165.81
+#allow from 93.16.19.210
+#allow from 93.16.165.151
+#allow from 93.16.19.208
+#allow from 93.16.165.222
+allow from 92.16.165.108
+
+#BetaTesteur Edarius
+#allow from 90.62.70.201
+#allow from 90.62.2.146
+allow from 86.217.48.217
+
+#BetaTesteur joojoo
+allow from 88.166.192.21
+
+#BetaTesteur Aelarian
+#allow from 85.3.87.106
+#allow from 85.1.39.126
+allow from 92.107.68.117 
+
+#BetaTesteur Yuna
+#allow from 90.40.118.178
+#allow from 90.40.124.229
+#allow from 90.40.214.135
+#allow from 90.40.118.205
+allow from 90.39.167.6 
+
+#BetaTesteur Malkan
+#allow from 86.212.64.59
+#allow from 86.212.22.59
+#allow from 93.1.65.229
+#allow from 80.118.227.166
+#allow from 80.118.227.123
+#allow from 86.212.82.47 
+#allow from 86.212.66.56
+allow from 86.212.64.27
+
+#BetaTesteur Teanna
+allow from 89.3.170.148
+
+#BetaTesteur Arkael
+allow from 66.130.48.205
+
+#BetaTesteur Khara
+#allow from 81.50.147.213
+allow from 92.161.202.87
+
+#BetaTesteur Alundra
+allow from 79.82.87.161

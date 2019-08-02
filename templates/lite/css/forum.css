@@ -1,0 +1,230 @@
+
+/* FORUM TABLE */
+
+a.section,
+a.section:visited{
+	font-weight: bold;
+	font-size: 13px;
+	text-decoration: none;
+	color: #540000;
+	background-color: inherit;
+	
+}
+a.section:hover,
+a.section:focus,
+a.section:active {
+	color: #B40000;
+	background-color: inherit;
+}
+ 
+div.blocktable{
+padding-bottom: 0px;
+margin-bottom: 5px;
+margin: auto;
+width: 100%;
+}
+
+div.blocktable h5{
+ background-color: transparent;
+ /*background-image: url("../main_pic/catbg2.png");*/
+ color: #ffbb00;
+ font : 13px Arial;
+ font-weight: bold;
+ text-align: left;
+ padding: 5px;
+ height: 30px;
+	border: 				0px double #880000;
+}
+
+div.blocktable h5 span{
+ background-image: url("../ico/titre.gif");
+ background-repeat: no-repeat;
+ padding-left: 30px;
+}
+
+div.inbox table thead{
+	border: 				0px solid black;
+	background-image:		url('../main_pic/bg_news.png');
+}
+
+th.ft2 {
+	border: 				1px solid #b0a17f;
+ text-align: left;
+color: #540000;
+padding-left: 30px;
+font-size: 16px;
+background : url('../ico/puce.gif') center left no-repeat;
+}
+
+th.ft3 {
+	border: 				1px solid #b0a17f;
+ text-align: center;
+}
+
+th.ft4 {
+	border: 				1px solid #b0a17f;
+ text-align: center;
+}
+
+table.fofotable{
+ width: 100%;
+ border: 1px solid #b0a17f;
+ line-height: 17px;
+ margin-bottom: 25px;
+}
+
+tr.tr {
+border : none;
+}
+
+tr.tr:hover{
+	background-image:		url('../main_pic/bg_news.png');
+	border:					1px solid #000;
+}
+
+.ft1{
+ width: 10%;
+ padding: 5px;
+}
+.ft2{
+ width: 50%;
+ padding: 5px;
+}
+.ft3{
+ width: 10%;
+ padding: 5px;
+}
+.ft4{
+ width: 30%;
+ padding: 5px;
+}
+
+td.ft1{
+	border: 				0px solid #e1cfa1;
+}
+
+td.ft2{
+	border: 				0px solid #e1cfa1;
+}
+
+td.ft3{
+	border: 				0px solid #e1cfa1;
+}
+
+td.ft4{
+	border: 				0px solid #e1cfa1;
+}
+
+div.topic_message_nonlu{
+	float: left;
+	padding-right: 1em;
+	width: 25px;
+	height: 25px;
+	background-image: url("../ico/l_topic_nonlu.png");
+	background-repeat: no-repeat;
+}
+
+div.topic_message_lu{
+	float: left;
+	padding-right: 1em;
+	width: 25px;
+	height: 25px;
+	background-image: url("../ico/l_topic_lu.png");
+	background-repeat: no-repeat;
+}
+
+
+/* POST */
+
+#titre_topic {
+text-align: center;
+font-size: 20px;
+font-weight: bold;
+color: #880000;
+padding: 10px;
+margin-top: -10px;
+}
+
+div.blockPost{
+	width: 360px;
+}
+
+div.blockPostHeader{
+	width: 360px;
+	padding-bottom: 20px;
+	text-align: right;
+	float: left;
+}
+
+div.blockPostHeaderAvatar{
+	width: 360px;
+	float: left;
+	text-align: center;
+}
+
+div.box_forum_avatar_top {
+background: url('../main_pic/bg_news.png');
+text-align: left;
+height: 30px;
+}
+
+div.box_forum_avatar_middle {
+display: none;
+}
+
+div.box_forum_avatar_bottom {
+display: none;
+}
+
+div.pseudo{
+	font-size: 16px;
+	font-weight: bold;
+	color: #222;
+	text-align: center;
+	display: block;
+	float: left;
+	clear: both;
+}
+
+div.pseudo_ivo {
+display: none;
+}
+
+div.blockPostContent{
+	padding: 0px;
+	width: 350px;
+	clear: both;
+	text-align: justify;
+}
+
+div.blockPostFooter{
+display: none;
+}
+
+div.blockPostEdit{
+display: none;
+}
+
+
+  
+.navigation {
+padding-left: 5px;
+padding-bottom: 15px;
+}
+
+.pagination {
+padding-left: 5px;
+padding-bottom: 5px;
+}
+
+.topic_top {
+display: none;
+}
+
+.topic_middle {
+width: 400px;
+}
+
+.topic_bottom {
+display: none;
+}

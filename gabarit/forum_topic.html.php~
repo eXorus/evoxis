@@ -1,0 +1,186 @@
+<?php
+defined( '_VALID_CORE_FORUM_TOPIC' ) or die( 'Restricted access' );
+require_once('./templates/'.$link_style.'top.php');
+
+/****
+*NAVIGATION
+*/
+$navigation_content = '<div class="navigation"><strong>› Navigation :</strong>';
+	
+$navigation_content .= '
+<a href="index.php?comp=forum_index">[ Index ]</a> • ';
+
+$navigation_content .= '<a href="index.php?comp=forum_board&amp;select='.$posts[0]->board_id.'&amp;start=0">[ Liste des topics ]</a> • ';
+		
+if(!empty($_SESSION['connected']) && $_SESSION['connected']==TRUE && $posts[0]->locked==0){
+	$navigation_content .= '<a href="index.php?comp=forum_post&amp;tid='.$select.'">[ Répondre ]</a>';
+}
+else {
+	$navigation_content .=  '';
+}
+$navigation_content .= '</div>';
+	
+
+/****
+* MENU MJ TOPIC
+*/
+if($secureObject->verifyAuthorization('FO_FORUM_TOPIC_MODERATE')==TRUE){
+	
+		$menu_topic_mj = '<div class="navigation"><strong>› MJ : 
+			<a href="index.php?comp=forum_post&amp;pid='.$posts[0]->first_post_id.'&amp;tid='.$posts[0]->tid.'">Modifier</a> | 
+			<a href="index.php?comp=forum_admin&amp;action=move&amp;tid='.$posts[0]->tid.'">Déplacer</a> | 
+			<a href="index.php?comp=forum_admin&amp;action=delete&amp;tid='.$posts[0]->tid.'" 
+				onclick="return confirm(\'Voulez-vous vraiment effacer ce topic ?\');">Effacer</a> | 
+			<a href="index.php?comp=forum_admin&amp;action=locked&amp;tid='.$posts[0]->tid.'">Bloquer/Débloquer</a> | 
+			<a href="index.php?comp=forum_admin&amp;action=link_calendar&amp;tid='.$posts[0]->tid.'">Lier au calendrier</a></strong></div>';
+}
+
+echo $navigation_content;
+echo ''.$menu_topic_mj.'';
+
+if(!empty($posts)){
+	displayPaginationBar($Ntotal, ($start/$Nmax)+1, "./index.php?comp=forum_topic&amp;select=".$select."&amp;start=", 30);
+	
+	
+	//Tags
+		if($topic->listeTags!=';'){
+			$tagTopic = 'Tags : ';
+			$listags = explode(';', $topic->listeTags);
+			foreach($listags as $onetag){
+				$datatag = explode('|', $onetag);
+				$tagTopic .= '[<a href="index.php?comp=forum_board&amp;select='.$select.'&amp;start=0&filter='.$datatag[0].'">'.htmlspecialchars($datatag[1]).'</a>] ';
+			}
+		}
+		else{
+			$tagTopic = '';
+		}
+		
+echo '<div class="topic_top_std"></div>
+<div class="topic_middle_std">
+<div id="titre_topic">'.stripslashes(htmlspecialchars($posts[0]->topic_subject)).'<br /><p>'.$tagTopic.'</p></div></div><div class="topic_bottom_std"></div>
+';
+	foreach($posts as $post){
+	
+	/****
+	* MENU MJ POST
+	*/
+	if($secureObject->verifyAuthorization('FO_FORUM_POST_MODERATE')==TRUE){
+		$menu_post_mj = '<strong> [ MJ : 
+			<a href="index.php?comp=forum_post&amp;pid='.$post->pid.'">Modifier</a> | 
+			<a href="index.php?comp=forum_admin&amp;action=moderate&amp;pid='.$post->pid.'">Modérer</a> | 
+			<a href="index.php?comp=forum_admin&amp;action=delete&amp;pid='.$post->pid.'" onclick="return confirm(\'Voulez-vous vraiment effacer ce message ?\');">Effacer</a> ]</strong>';
+	}
+	
+	if(empty($post->avatarID) && empty($post->avatarExtID)) $avatar = '<img src="./img/pictures/0.png" alt="Avatar"/>';
+	else $avatar = '<img src="./img/pictures/'.$post->avatarID.'.'.$post->avatarExtID.'" alt="Avatar"/>';
+	
+	$edit = '';
+	if(!empty($_SESSION['connected']) && $_SESSION['connected']==TRUE && !empty($_SESSION['uid'])){
+		if ($post->p_uid==$_SESSION['uid'] && ($post->pid==$post->first_post_id)){
+			$edit = '<a href="index.php?comp=forum_post&amp;pid='.$post->pid.'&amp;tid='.$post->tid.'">Modifier</a> |';
+		}
+		else if ($post->p_uid==$_SESSION['uid']){
+			$edit = '<a href="index.php?comp=forum_post&amp;pid='.$post->pid.'">Modifier</a> |';
+		}
+	}	
+	
+	//Affichage du pseudo
+		//Sexe
+		if($post->sexe==1){$pseudoColor = '#0000FF';}
+		else{$pseudoColor = '#FF00FF';}
+		
+		//Group
+		if($post->gid==1){$pseudoGroup = 'ADMIN';}
+		elseif($post->gid==2 || $post->gid==5){$pseudoGroup = 'RP';}
+		elseif($post->gid==3 || $post->gid==8){$pseudoGroup = 'TECH';}
+		elseif($post->gid==4 || $post->gid==9){$pseudoGroup = 'WELCOME';}
+		else{$pseudoGroup = 'MEMBRE';}
+
+		//Group infobulle
+		if($post->gid==1){$pseudoGroupInfo = 'Administrateur';}
+		elseif($post->gid==2 || $post->gid==5){$pseudoGroupInfo = 'MJ&nbsp;Role&nbsp;Play';}
+		elseif($post->gid==3 || $post->gid==8){$pseudoGroupInfo = 'MJ&nbsp;Technique';}
+		elseif($post->gid==4 || $post->gid==9){$pseudoGroupInfo = 'MJ&nbsp;Welcome';}
+		else{$pseudoGroup = 'MEMBRE';}
+
+		//Affichage topics selon groupe membres
+		if($post->gid==1 || $post->gid==2 || $post->gid==3 || $post->gid==4 || $post->gid==5 || $post->gid==8 || $post->gid==9)
+		{$affiche_topic = 'mj';}
+		else
+		{$affiche_topic = 'std';}
+			
+	$pseudo = '<span class="pseudo_text" style="color: '.$pseudoColor.';">'.stripslashes(htmlspecialchars($post->p_name)).'</span>';
+	
+
+echo '
+<div class="topic_top_'.$affiche_topic.'"></div>
+<div class="topic_middle_'.$affiche_topic.'">
+	<div class="blockPostHeaderAvatar">';
+
+echo '
+<div class="box_forum_avatar_top_'.$affiche_topic.'">
+			<div class="pseudo">
+				<div class="pseudo_ivo"> • '.$post->itotal.' Pts •<br />'.$pseudo.'
+				</div>
+			</div>
+</div>
+<div class="box_forum_avatar_middle_'.$affiche_topic.'">'.$avatar.'
+<br />
+<a href="index.php?comp=profil&amp;select='.$post->p_uid.'" onmouseover="Tip(\'Profil\')" onmouseout="UnTip()"><img class="bt_box" src="./templates/'.$link_style.'/main_pic/forum_profil.png" alt="Profil"/></a>
+<a href="index.php?comp=mp_write&amp;to='.$post->p_uid.'" onmouseover="Tip(\'Ecrire&nbsp;un&nbsp;message&nbsp;privé\')" onmouseout="UnTip()"><img class="bt_box" src="./templates/'.$link_style.'/main_pic/forum_messagerie.png" alt="Ecrire un message"/></a> 
+<a href="index.php?comp=bg&amp;select='.$post->p_wow_id.'" onmouseover="Tip(\'Backgrounds\')" onmouseout="UnTip()"><img class="bt_box" src="./templates/'.$link_style.'/main_pic/forum_bgs.png" alt="Backgrounds"/></a>
+		</div>
+<div class="box_forum_avatar_bottom_'.$affiche_topic.'">';
+
+echo '	
+<a href="index.php?comp=team">
+<img src="./templates/'.$link_style.'/ico/group_'.$pseudoGroup.'.png" onmouseover="Tip(\''.$pseudoGroupInfo.'\')" onmouseout="UnTip()" alt="Groupe"/>
+</a>
+</div>
+	</div>
+
+<div id="pid'.$post->pid.'" class="blockPost">
+	<div class="blockPostHeader">
+				<strong>Sujet :</strong> '.stripslashes(htmlspecialchars($posts[0]->topic_subject)).' |
+				'.format_time($post->post_time).' | 
+				'.$edit.'
+				<br />'.$menu_post_mj.'
+	</div>
+
+	<div class="blockPostContent">
+	'.stripslashes(nl2br(parse_bbcode_smiley(htmlspecialchars($post->body))));
+	
+	if(!empty($post->e_uid)){
+		echo '<div class="blockPostEdit">
+	Modifié par <a href="index.php?comp=profil&amp;select='.$post->e_uid.'">'.stripslashes(htmlspecialchars($post->e_name)).'</a> le '.format_time($post->post_last_edit_time).'
+	</div>';
+	}
+	echo '
+	</div></div>
+	<div class="blockPostFooter">&nbsp;<p>'.stripslashes(htmlspecialchars($post->p_signature)).'</p>&nbsp;</div>
+	<div align="right" style="padding-bottom: 10px; margin-right: 50px;"><a href="#top"><img src="./templates/'.$link_style.'/ico/topic_up.gif" height="20px" width="20px" align="top" title="Haut de page" alt="Haut de page"/></a>&nbsp;
+	<a href="#bot"><img src="./templates/'.$link_style.'/ico/topic_down.gif" height="20px" width="20px" align="top" title="Bas de page" alt="Bas de page"/></a>
+	</div>
+
+</div><div class="topic_bottom_'.$affiche_topic.'"></div>
+
+';	
+
+	}
+
+
+displayPaginationBar($Ntotal, ($start/$Nmax)+1, "./index.php?comp=forum_topic&amp;select=".$select."&amp;start=", 30);
+
+}else{
+	echo "Le message que vous essayez de consulter n'existe pas, ou bien vous n'avez pas l'autorisation de le visualiser.";
+	
+
+}
+
+
+echo $navigation_content;
+echo $menu_topic_mj;
+require_once('./templates/'.$link_style.'bottom.php');
+
+?>
+

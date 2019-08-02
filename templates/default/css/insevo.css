@@ -1,0 +1,32 @@
+
+/*
+* AFFICHAGE des vaidation en attente
+*/
+
+table.insevo{
+	width: 100%;
+	margin: auto;
+}
+
+table.insevo  thead{
+	background-color: #2F324D;
+	color: black;
+	font-weight: normal;
+}
+
+table.insevo td{
+	background-color: #cbb072;
+	color: black;
+	font-weight: normal;
+ 	padding: 0.2em;
+}
+
+table.insevo th{
+	background-color: #cbb072;
+	color: #940000;
+	font-weight: bold;
+	vertical-align: top;
+	border: 1px outset #EEE;
+ 	padding: 0.5em;
+	
+}

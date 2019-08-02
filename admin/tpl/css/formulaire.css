@@ -1,0 +1,94 @@
+/* FORMULAIRE */
+#blockFormulaire{
+	width: 100%;
+	margin: auto;
+	background-color: #AEC5D5;
+}
+
+#blockFormulaire  fieldset{
+   margin: 5px;
+   border: 2px dotted white;
+   padding: 15px;
+   padding-top: 0.5em;
+}
+
+#blockFormulaire  legend{
+   color: #195B89;
+   font-weight: bold;
+   padding-left: 5px;
+   padding-right: 5px;
+}
+
+#blockFormulaire  label{
+font-weight: bold;
+display:block;
+width:150px;
+margin-top: 10px;
+}
+
+#blockFormulaire  input[type="text"]{
+background: #F7F7F7;
+border: 1px solid #195B89;
+margin-top: 5px;
+font: 12px Verdana;
+width:auto;
+}
+
+#blockFormulaire  input[type="submit"]{
+background: #F7F7F7;
+border: 1px solid red;
+font: 12px Verdana;
+font-weight: bold;
+display:block;
+width: 73%;
+height: 20px;
+margin: auto;
+}
+
+#blockFormulaire  input[type="radio"]{
+background: #F7F7F7;
+border: 1px solid #195B89;
+margin-top: 5px;
+margin-right: 5px;
+font: 12px Verdana;
+}
+
+#blockFormulaire  input[type="checkbox"]{
+background: #F7F7F7;
+border: 1px solid #195B89;
+margin-top: 10px;
+font: 12px Verdana;
+}
+
+#blockFormulaire  select{
+background: #F7F7F7;
+border: 1px solid #195B89;
+margin-top: 10px;
+font: 12px Verdana;
+}
+
+#blockFormulaire  input[type="option"]{
+background: #F7F7F7;
+border: 1px solid #195B89;
+margin-top: 10px;
+font: 12px Verdana;
+}
+
+#blockFormulaire  textarea{
+background: #F7F7F7;
+border: 1px solid #195B89;
+font: 12px Verdana;
+width: 600px;
+margin-top: 0.5em;
+}
+
+#blockFormulaireError{
+border: 1px solid red;
+width: 300px;
+margin: auto;
+}
+
+#blockFormulaire  p.info{
+padding: 10px;
+font-style: italic;
+}

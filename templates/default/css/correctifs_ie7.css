@@ -1,0 +1,160 @@
+/*STRUCTURE*/
+
+#conteneurgauche {
+position: absolute;
+top: expression((document.documentElement.scrollTop || document.body.scrollTop) + this.offsetHeight - this.offsetHeight);
+background: url('../main_pic/menu_gauche.png') top center no-repeat;
+height: 600px;
+width: 158px;
+text-align: center;
+}
+
+#menu_haut {
+	text-align:				center;
+	padding-top: 			102px;
+	color: 					#CCC;
+}
+
+#sousheader {
+	width:					954px;
+	height:					182px;
+	background: 			url("../main_pic/sousheader.png") no-repeat center;
+}
+
+#box_login {
+height: 120px;
+width: 120px;
+float: right;
+margin-top: 15px;
+padding-top: 20px;
+padding-right: 25px;
+color: #555;
+text-align: center;
+line-height: 20px;
+}
+
+#logout {
+float: right;
+text-align: right;
+padding-top: 15px;
+padding-right: 12px;
+height: 31px;
+width: 65px;
+display: block;
+}
+
+#conteneurdroit_center {
+	width: 					854px;
+	height: 				auto;
+	background: 			url("../main_pic/conteneurdroit_center.png") repeat-y left center;
+	padding-left: 			121px;
+	margin-right:			50px;
+}
+
+#conteneurdroit_bottom {
+}
+
+#contenu {
+padding: 0px 0px 0px 10px;
+text-align: justify;
+margin: 0px 60px 0px 0px;
+}
+
+.inputlogin {
+width: 85px;
+height: 16px;
+line-height: 16px;
+background: transparent;
+border: 1px inset #CCC;
+color: #555;
+}
+
+/*FORUM*/
+
+div.blockPostContent{
+	padding: 5px;
+	margin-left: -150px;
+	width: 600px;
+}
+
+div.blockPost{
+	width: 510px;
+	margin-left: 0px;
+	padding-left: 100px;
+}
+
+div.blockPostHeader{
+	width: 500px;
+	padding-bottom: 10px;
+	margin-bottom: 10px;
+	text-align: right;
+	float: right;
+	margin-right: 10px;
+}
+
+div.blockPostFooter{
+	width: 550px;
+	border-top: 1px dashed #444;
+	clear: left;
+	color: #444;
+	font-style: italic;
+	text-align: center;
+	margin-right: 40px;
+}
+
+
+.topic_middle {
+background: url('../main_pic/forum_middle.png') center top repeat-y;
+width: 780px;
+padding-top: 20px;
+}
+
+
+div.pseudo{
+	font-size: 16px;
+	font-weight: bold;
+	color: #222;
+	text-align: center;
+	display: block;
+	float: left;
+	clear: both;
+	width: 100px;
+	padding-top: 30px;
+	margin-left: 10px;
+	padding-bottom: 10px;
+	/*white-space:nowrap;*/
+}
+
+div.pseudo_ivo {
+	padding-top: 15px;
+	font-size: 10px;
+	color: #555;
+}
+
+div.box_forum_avatar_top {
+background: url('../main_pic/box_forum_avatar_top.png') center bottom no-repeat;
+text-align: center;
+margin-top: -20px;
+height: 76px;
+width: 120px;
+z-index: 1;
+}
+
+div.box_forum_avatar_middle {
+background: url('../main_pic/box_forum_avatar_middle.png') left no-repeat;
+text-align: center;
+height: 191px;
+width: 120px;
+padding-left: 1px;
+}
+
+div.box_forum_avatar_middle img {
+margin-top: 0px;
+}
+
+div.box_forum_avatar_bottom {
+background: url('../main_pic/box_forum_avatar_bottom.png') center bottom no-repeat;
+text-align: center;
+height: 64px;
+width: 120px;
+}

@@ -1,0 +1,573 @@
+* {
+ margin: 0;
+ padding: 0;
+ border: 0;
+ text-decoration: none;  
+ font: 1em Verdana, Arial;
+}
+
+body{
+	width: 800px;
+	margin: auto;
+	margin-top: 20px;
+	margin-bottom: 20px;
+	background: #2A2A2A;
+}
+#topHeader{
+
+	background: 			#383838;
+	border: 				1px solid #565656;	
+	width: 					800px;
+	height: 				55px;
+}
+
+#topHeaderLogo{
+
+	width: 					55px;
+	height: 				55px;
+	background-image: 		url("../pic/world.png");
+	background-repeat: 		no-repeat;
+	float: 					left; 
+}
+
+#topHeaderTitle{
+
+	width: 					100%;
+	color:					#A0B9F3;
+	font: 					1.5em Verdana, Arial;		
+}
+
+
+#footer{
+	background: #383838;
+	border: 1px solid #565656;
+	width: 800px;
+	height: 50px;
+	text-align: center;
+	font: 					0.8em Verdana, Arial;
+	
+	color:#A0B9F3;
+}
+
+#topMenu{
+	width: 800px;
+	height: 50px;
+}
+
+#contenu{
+	border: 1px solid #565656;
+	width: 800px;
+}
+#boxTitlePage{
+	background: #565656;
+	border: 1px solid #565656;
+	width: 800px;
+	font: 					1.2em Verdana, Arial;
+	text-align: center;
+}
+	
+	
+/*********** MENU BAR***********/
+#menuwrapper {
+	font:11pt Verdana,sans-serif;
+}
+#menu, #menu ul {
+	padding: 0;
+	margin: 0;
+	list-style: none;
+	line-height: 160%;
+}
+#menu a {
+	display: block;
+	text-decoration: none;
+	padding: 5px 15px 5px 15px;
+	border-right: 1px solid #565656;
+	font-size: .85em;
+	color: #f6b620; /*main menu text color*/
+}
+#menu a.trigger {
+	padding: 5px 15px 5px 15px;
+}
+#menu li {
+	float: left;
+	width: 9em;
+}
+#menu li {position: relative;}
+/* hide from IE mac \*/
+#menu li {position: static; width: auto;}
+/* end hiding from IE5 mac */
+#menu li ul, #menu ul li  {
+	width: 11em; /*submenu len*/
+}
+#menu ul li a  {
+	color: #f6b620;
+	border-right: 0;
+	padding: 3px 12px 3px 15px;
+}
+#menu li ul {
+	position: absolute;
+	display: none;
+	background-color: #282927; /*submenu bg color*/
+	border-right: 1px solid #565656;
+	border-bottom: 1px solid #565656;
+	filter:alpha(opacity=85);
+	-moz-opacity:.85;
+	opacity:0.85;
+}
+#menu li:hover a, #menu a:focus,
+#menu a:active, #menu li.hvr a {
+	color: #f6b620; /*menu selected text color*/
+	background-color: #282927; /*menu selected bg color*/
+}
+#menu li:hover ul, #menu li.hvr ul {
+	display: block;
+}
+#menu li:hover ul a, #menu li.hvr ul a {
+	color: #f6b620; /*submenu text color*/
+	background-color: transparent;
+}
+#menu ul a:hover {
+	background-color: #444543 !important; /*submenu selected bg color*/
+	color: #ffee40 !important; /*submenu selected text color*/
+}
+/*********** MENU BAR END***********/
+
+/*
+XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX
+XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX
+*/
+#boxLogin {
+ width: 400px;
+ margin: auto;
+ margin-top: 50px;
+ margin-bottom: 50px;
+ padding: 12px;
+ padding-bottom: 0px;
+}
+
+
+#boxLogin
+{
+	width: 60%;
+}
+
+#boxLogin p
+{
+	margin: 2px 0;
+}
+
+/* fieldset , legend */
+#boxLogin fieldset
+{
+	margin-bottom: 10px;
+	border: #CCC 1px solid;
+}
+
+#boxLogin fieldset legend
+{
+	padding: 0 10px;
+	margin-left: 10px;
+	border-left: #CCC 1px solid;
+	border-right: #CCC 1px solid;
+	font-size: 1.2em;
+	color: #999;
+}
+
+
+/* Label */
+#boxLogin label
+{
+	display: block;
+	width: 39%;
+	float: left;
+	padding-right: 1%;
+	text-align: right;
+	letter-spacing: 1px;
+	color: #D4D4D4;
+}
+
+/* Input */
+#boxLogin input, #boxLogin select
+{
+	margin-left: 1%;
+	width: 58%;
+	border: 1px solid #565656;
+	background-color: #2A2A2A;
+	color: #D4D4D4;
+	font-weight: bold;
+}
+
+#boxLogin input:hover
+{
+	border:  1px solid #BBBBBB;
+}
+
+#boxLogin input:focus
+{
+	border:  1px solid #F6B620;
+}
+
+
+/* button submit */
+#boxLogin input[type="submit"]
+{
+	border: 1px solid #565656;
+	background-color: #383838;
+	margin: auto;
+	margin-top: 22px;
+}
+
+#boxLogin input[type="submit"]:hover
+{
+	background-color: #f6b620;
+	cursor: pointer;
+}
+
+#boxLoginRules {
+ width: 500px;
+ margin: auto;
+ margin-top: 22px;
+ margin-bottom: 22px;
+ text-align: justify;
+ font: 0.8em Verdana, Arial;
+}
+
+/*
+XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX
+XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX TABLEAU
+*/
+
+
+
+table.mainTab
+{
+	font-family: "Lucida Sans Unicode", "Lucida Grande", Sans-Serif;
+	font-size: 12px;
+	margin: auto; 
+	text-align: left;
+	border-collapse: collapse;
+	width: 100%;
+}
+table.mainTab th
+{
+	font-size: 13px;
+	font-weight: bold;
+	padding: 8px;
+	background: #484848;
+	border-top: 4px solid #FFFFFF;
+	border-bottom: 1px solid #fff;
+	color: #F6B620;
+}
+table.mainTab td
+{
+	padding: 8px;
+	background: #565656; 
+	border-bottom: 1px solid #fff;
+	color: #D4D4D4;
+	border-top: 1px solid transparent;
+}
+
+table.mainTab td a
+{
+	color: #D4D4D4;
+}
+
+table.mainTab tr:hover td
+{
+	background: #F6B620;
+	color:#000000;
+}
+
+table.mainTab tr:hover td a
+{
+	color: #000000;
+}
+
+/*
+XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX
+XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX
+*/
+
+div.pagine{
+	width: 100%;
+	height: 25px;
+	padding-top:10px;
+	padding-bottom:10px;
+}
+
+ul
+{
+    border:0; 
+    margin:0; 
+    padding:0;
+
+}
+
+#pagination li
+{
+    border:0; 
+    margin:0; 
+    padding:0;
+    font-size:11px;
+    list-style:none;
+    margin-right:2px;
+}
+
+#pagination a
+{
+    border:solid 1px #9aafe5;
+    margin-right:2px;
+}
+
+#pagination .previous-off, #pagination .next-off 
+{
+    border:solid 1px #DEDEDE;
+    color:#888888;
+    display:block;
+    float:left;
+    font-weight:bold;
+    margin-right:2px;
+    padding:3px 4px;
+}
+
+#pagination.next a, #pagination .previous a 
+{
+    font-weight:bold;
+}
+
+#pagination .active
+{
+    background:#2e6ab1;
+    color:#FFFFFF;
+    font-weight:bold;
+    display:block;
+    float:left;
+    padding:4px 6px;
+}
+
+#pagination a:link, #pagination a:visited 
+{
+    color:#0e509e;
+    display:block;
+    float:left;
+    padding:3px 6px;
+    text-decoration:none;
+}
+
+#pagination a:hover
+{
+    border:solid 1px #0e509e;
+}
+
+/*
+XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX
+XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX mainForm
+*/
+
+
+form.mainForm{
+ width: 80%;
+  margin: auto; 
+ margin-top: 5px;
+ margin-bottom: 5px;
+ font-size: 0.8em;
+}
+
+form.mainForm p{
+	margin: 2px 0;
+}
+
+form.mainForm fieldset
+{
+	margin-bottom: 10px;
+	border: #CCC 1px solid;
+}
+
+form.mainForm fieldset legend
+{
+	padding: 0 10px;
+	margin-left: 10px;
+	border-left: #CCC 1px solid;
+	border-right: #CCC 1px solid;
+	font-size: 1.2em;
+	color: #999;
+}
+
+form.mainForm label
+{
+	display: block;
+	width: 39%;
+	float: left;
+	padding-right: 1%;
+	text-align: right;
+	letter-spacing: 1px;
+	color: #D4D4D4;
+}
+
+form.mainForm input, form.mainForm select
+{
+	margin-left: 1%;
+	width: 58%;
+	border: 1px solid #565656;
+	background-color: #2A2A2A;
+	color: #D4D4D4;
+	font-weight: bold;
+}
+
+form.mainForm input:hover
+{
+	border:  1px solid #BBBBBB;
+}
+
+form.mainForm input:focus
+{
+	border:  1px solid #F6B620;
+}
+
+form.mainForm input[type="submit"]
+{
+	border: 1px solid #565656;
+	background-color: #383838;
+	margin: auto;
+	margin-top: 22px;
+}
+
+form.mainForm input[type="submit"]:hover
+{
+	background-color: #f6b620;
+	cursor: pointer;
+}
+
+form.mainForm input[type="button"]
+{
+	border: 1px solid #565656;
+	background-color: #383838;
+	margin: auto;
+	margin-top: 22px;
+}
+
+form.mainForm input[type="button"]:hover
+{
+	background-color: #f6b620;
+	cursor: pointer;
+}
+
+form.mainForm a
+{
+	cursor: pointer;
+	text-decoration: none;
+	padding: 5px 15px 5px 15px;
+	font-size: .85em;
+	color: #f6b620;
+}
+
+
+/*
+XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX
+XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX 
+*/
+
+#BoxStateError, #BoxStateInfo {
+	width: 300px;
+	margin: auto;
+	padding-left: 20px;
+	margin-top: 5px;
+	margin-bottom: 5px;
+}
+
+#BoxStateError{
+	background-color: red;
+}
+
+#BoxStateInfo {
+	background-color: green;
+}
+
+/*
+XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX
+XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX 
+*/
+div.wall{
+	margin: auto;
+	width: 90%;
+	border: 1px solid #565656;
+	background-color: #2A2A2A;
+	color: #D4D4D4;
+	font-weight: bold;
+	visibility: hidden;
+	display: none;
+}
+
+div.headerwall{
+	margin: auto;
+	width: 90%;
+	border: 1px solid #565656;
+	background-color: #565656;
+	color: #D4D4D4;
+	font-weight: bold;
+}
+
+div.headerwall a {
+	cursor: pointer;
+	text-decoration: none;
+	color: #f6b620;
+}
+/*
+******************************************************
+***** ONGLET *****
+******************************************************
+*/
+div.onglet{
+	padding: 10px;
+	color: #f6b620;
+	font-size: .8em;
+}
+
+div.onglet a{
+	text-decoration: none;
+	color: #f6b620;
+}
+
+div.onglet span.active{
+	text-decoration: none;
+	color: #f6b620;
+	border-bottom: 1px solid #f6b620;
+}
+
+/*
+******************************************************
+***** CLASS MESSAGE *****
+******************************************************
+*/
+.INFO, .SUCCESS, .WARNING, .ERROR, .VALIDATION {
+	border: 1px solid;
+	margin: 10px 200px;
+	padding:15px 10px 15px 50px;
+	background-repeat: no-repeat;
+	background-position: 10px center;
+}
+.INFO {
+	color: #00529B;
+	background-color: #BDE5F8;
+	background-image: url('../ico/message_info.png');
+}
+.SUCCESS {
+	color: #4F8A10;
+	background-color: #DFF2BF;
+	background-image:url('../ico/message_success.png');
+}
+.WARNING {
+	color: #9F6000;
+	background-color: #FEEFB3;
+	background-image: url('../ico/message_warning.png');
+}
+.ERROR {
+	color: #D8000C;
+	background-color: #FFBABA;
+	background-image: url('../ico/message_error.png');
+}
+.VALIDATION {
+    color: #D63301;
+    background-color: #FFCCBA;
+    background-image: url('../ico/message_validation.png');
+}

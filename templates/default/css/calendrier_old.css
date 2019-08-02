@@ -1,0 +1,131 @@
+/* CSS Document */
+.calendrier {
+display:inline;
+padding-right:0px ;
+border-width:0px ;
+text-align: center; 
+color: #000000; /* Couleur du texte dans les cases du calendrier */
+border-spacing: 1px; 
+font-size: 1.0em; 
+margin: auto ;
+float: left;
+z-index: 100;
+}
+
+.calendrier td, .calendrier tr{
+padding: 0;
+}
+
+.calendrier th {
+	color: #81151e;
+}
+
+/* Les 4 lignes qui suivent définissent la couleur de fond d'une case où il y a un évènement, ainsi que la couleur du texte. Ces mêmes couleurs 
+sont utilisés pour le titre de l'évènement */
+.calendrier .celluleevenement {
+	background-image:		url('../main_pic/bg_news.png');
+color:#840000;
+border: 1px solid #840000;
+}
+
+p.princ {
+	background:		url('../pic/event_princ.png') no-repeat right;
+color:#840000;
+text-align: left;
+border-bottom: 1px solid #840000;
+padding-bottom: 20px;
+}
+
+p.sec {
+	background:		url('../pic/event_sec.png') no-repeat right;
+color:#840000;
+text-align: left;
+border-bottom: 1px solid #840000;
+}
+
+p.divers {
+	background:		url('../pic/event_divers.png') no-repeat right;
+color:#840000;
+text-align: left;
+border-bottom: 1px solid #840000;
+}
+
+p.sans {
+color:#840000;
+text-align: left;
+border-bottom: 1px solid #840000;
+}
+
+p.princ:hover {
+	background:		url('../pic/event_princ2.png') no-repeat right;
+text-align: left;
+border-bottom: 1px solid black;
+color: black;
+}
+
+p.sec:hover {
+	background:		url('../pic/event_sec2.png') no-repeat right;
+text-align: left;
+border-bottom: 1px solid black;
+color: black;
+}
+
+p.divers:hover {
+	background:		url('../pic/event_divers2.png') no-repeat right;
+text-align: left;
+border-bottom: 1px solid black;
+color: black;
+}
+
+p.sans:hover {
+color:black;
+text-align: left;
+border-bottom: 1px solid black;
+}
+
+.calendrier .evenement p{
+font-size:11px;
+margin-bottom:7px;
+line-height: 20px;
+padding:0;
+}
+
+.calendrier .evenement{
+font-weight:normal ;
+/* Largeur, type et couleur du bord du cadre qui contient l'évènement */
+/* Couleur de fond du cadre qui contient l'évènement */
+color: #000000 ; /* Couleur du texte dans le cadre qui contient l'évènement */
+z-index: 10; 
+padding: 2px;
+padding-left: 5px;
+margin-top:1px;
+left:auto;
+text-align: left;
+}
+
+.evenement{
+background-image: url('../main_pic/bg_news.png');
+border: 3px double #b0a17f;
+}
+
+.calendrier .evenement{
+position: absolute; 
+visibility: hidden; 
+min-width:150px;
+max-width:200px ;
+}
+
+.calendrier td {
+border: none; 
+	background-image:		url('../main_pic/bg.gif'); /* Couleur de fond des cases du calendrier */
+width:25px ;
+}
+
+.calendrier td:hover {
+	background-image:		url('../main_pic/bg_news.png');  /* Couleur de fond des cases lors du survol de la souris */
+}
+
+.calendrier .today{
+font-weight:bold ;
+border: 1px solid #840000; /* Largeur, type et couleur du bord de la case du calendrier qui correspond à aujourd'hui */
+}

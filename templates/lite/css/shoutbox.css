@@ -1,0 +1,33 @@
+#ShoutContent {
+	font-size: 				10px;
+	text-align:				left;
+	height: 				138px;
+	width: 					380px;
+	overflow: 				auto;
+	margin-left:			5px;
+}
+
+#ShoutContent a {
+	font-size: 				10px;
+	color: 					#AA0000;
+	text-decoration: 		none;
+}
+
+#ShoutContent a:hover {
+	font-size: 				10px;
+	color: 					#770000;
+	text-decoration: 		underline;
+}
+
+#ShoutText {
+width: 330px;
+border: 1px inset #555;
+background: #fff7e5;
+height: 10px;
+}
+
+#ShoutSend {
+border: 1px outset #555;
+margin: 0;
+padding: 0;
+}
